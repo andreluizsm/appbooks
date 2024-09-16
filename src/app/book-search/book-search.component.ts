@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BookService } from '../book.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BookService } from '../../services/book.service.js';
 
 
 @Component({
@@ -23,14 +23,16 @@ export class BookSearchComponent {
   onSearch(): void {
     if (this.searchQuery.trim()) {
       this.bookService.searchBooks(this.searchQuery).subscribe(
-        (books) => {
-          this.books = books;
-          this.searchPerformed = true;
-        },
-        (error) => {
-          console.error('Error fetching books:', error);
-          this.books = [];
-          this.searchPerformed = true;
+        {
+          next: (books) => {
+            this.books = books;
+            this.searchPerformed = true;
+          },
+          error: (error) => {
+            console.error('Error fetching books:', error);
+            this.books = [];
+            this.searchPerformed = true;
+          }
         }
       );
     }
