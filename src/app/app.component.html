@@ -1,2 +1,7 @@
-<app-book-search></app-book-search>
+<header>
+    <nav>
+      <a routerLink="/app-book-search" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/favorites" routerLinkActive="active">Favorites</a>
+    </nav>
+  </header>
 <router-outlet />

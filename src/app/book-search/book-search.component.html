@@ -1,30 +1,39 @@
 <div class="search-container">
-    <h1>Book Search</h1>
-    <form (submit)="onSearch()">
-      <input 
-        type="text" 
-        [(ngModel)]="searchQuery" 
-        placeholder="Search for books by title or author"
-        name="query"
-        required
-      />
-      <button type="submit">Search</button>
-    </form>
-  
-    <div *ngIf="books.length > 0" class="book-list">
-      <h2>Search Results</h2>
-      <ul>
-        <li *ngFor="let book of books">
-          <img [src]="book.thumbnail" alt="Book cover" />
-          <h3>{{ book.title }}</h3>
-          <p>{{ book.authors.join(', ') }}</p>
-          <p>{{ book.description }}</p>
-          <button (click)="addToFavorites(book)">Add to Favorites</button>
-        </li>
-      </ul>
-    </div>
+  <h1>Book Search</h1>
+  <form (submit)="onSearch()" class="search-form">
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      placeholder="Search for books by title or author"
+      name="query"
+      required
+    />
+    <button type="submit">Search</button>
+  </form>
 
-    <div *ngIf="books.length === 0 && searchPerformed">
-      <p>No books found for "{{ searchQuery }}". Please try a different search term.</p>
+  <div *ngIf="books.length > 0" class="book-list">
+    <ul>
+      <li *ngFor="let book of books" (click)="showDescription(book)">
+        <img [src]="book.thumbnail" alt="Book cover" />
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.authors.join(', ') }}</p>
+        <p>{{ book.description | slice:0:100 }}...</p>
+        <button (click)="addToFavorites(book); $event.stopPropagation()">Add to Favorites</button>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="books.length === 0 && searchPerformed">
+    <p>No books found for "{{ searchQuery }}". Please try a different search term.</p>
+  </div>
+
+  <div class="modal" *ngIf="selectedBook">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <img [src]="selectedBook.thumbnail" alt="Book cover" class="modal-image"/>
+      <h3>{{ selectedBook.title }}</h3>
+      <p>{{ selectedBook.authors.join(', ') }}</p>
+      <p>{{ selectedBook.description }}</p>
     </div>
   </div>
+</div>

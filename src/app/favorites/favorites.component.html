@@ -1,0 +1,16 @@
+<div class="book-favorite">
+    <h1>Your Favorite Books</h1>
+    <ul *ngIf="favorites.length > 0; else noFavorites">
+      <li *ngFor="let book of favorites">
+        <img [src]="book.thumbnail" alt="Book cover" />
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.authors.join(', ') }}</p>
+        <p>{{ book.description }}</p>
+      </li>
+    </ul>
+  
+    <ng-template #noFavorites>
+      <p>You have no favorite books yet.</p>
+    </ng-template>
+  </div>
+  

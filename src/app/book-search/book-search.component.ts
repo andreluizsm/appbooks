@@ -2,33 +2,33 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BookService } from '../../services/book.service.js';
-
+import { FavoritesService } from '../services/favorites.service';
 
 @Component({
   selector: 'app-book-search',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,],
   templateUrl: './book-search.component.html',
   styleUrl: './book-search.component.scss'
 })
 
 export class BookSearchComponent {
-
   searchQuery: string = '';
   books: any[] = [];
   searchPerformed: boolean = false;
+  selectedBook: any = null;
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private favoritesService: FavoritesService) {}
 
   onSearch(): void {
     if (this.searchQuery.trim()) {
       this.bookService.searchBooks(this.searchQuery).subscribe(
         {
-          next: (books) => {
+          next:  (books) => {
             this.books = books;
             this.searchPerformed = true;
           },
-          error: (error) => {
+         error: (error) => {
             console.error('Error fetching books:', error);
             this.books = [];
             this.searchPerformed = true;
@@ -39,7 +39,13 @@ export class BookSearchComponent {
   }
 
   addToFavorites(book: any): void {
-    // Lógica para adicionar o livro aos favoritos
-    console.log('Add to favorites:', book);
+    this.favoritesService.addToFavorites(book);
+  }
+  showDescription(book: any): void {
+    this.selectedBook = book;
+  }
+
+  closeModal(): void {
+    this.selectedBook = null;
   }
 }
