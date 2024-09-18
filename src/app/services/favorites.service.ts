@@ -17,14 +17,11 @@ export class FavoritesService {
     
     if (!this.favorites.find(fav => fav.id === book.id)) {
       this.favorites.push(book);
-    } else {
-      console.log('Book is already in favorites:', book);
     }
   }
 
   removeFromFavorites(book: any): void {
     this.favorites = this.favorites.filter(fav => fav.id !== book.id);
-    console.log('Book removed from favorites:', book);
   }
 
   getFavorites(): any[] {
