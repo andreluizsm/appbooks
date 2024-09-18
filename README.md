@@ -23,25 +23,23 @@ Before you begin, you will need to have Node.js and npm installed on your machin
 
 ## Installation
 1. Clone this repository:
-
+  ```bash
    git clone https://github.com/andreluizsm/appbooks.git
-
-   cd appbooks
-
+   ```
 2. Install the project dependencies:
-
+  ```bash
     npm install
-
+   ```
 3. Install the `uuid` library to generate unique identifiers for books:
-
+  ```bash
     npm install uuid
-
+   ```
 ## Usage
 
 1. Start the development server:
-
+  ```bash
     npm run start
-
+   ```
 2. Open your browser and navigate to http://localhost:4200.
 
 3. Use the search bar on the home page to search for books.
@@ -67,17 +65,17 @@ Before you begin, you will need to have Node.js and npm installed on your machin
 1. Fork this repository.
 
 2. Create a branch for your new feature or bug fix:
-
+  ```bash
     git checkout -b my-new-feature
-
+   ```
 3. Make your changes and add tests if applicable.
 
 4. Commit your changes:
-
+  ```bash
     git commit -m "Add new feature X"
-
+   ```
 5. Push to the branch:
-
+  ```bash
     git push origin my-new-feature
-
+   ```
 6. Open a Pull Request on the original repository.
