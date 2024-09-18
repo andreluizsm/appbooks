@@ -1,16 +1,45 @@
-<div class="book-favorite">
-    <h1>Your Favorite Books</h1>
-    <ul *ngIf="favorites.length > 0; else noFavorites">
-      <li *ngFor="let book of favorites">
+<div class="favorites-container">
+  <h1>Favorites</h1>
+
+  <div *ngIf="favorites.length > 0" class="filter-container">
+    <label for="starOrder">Sort by:</label>
+    <select id="starOrder" [(ngModel)]="selectedOrder" (change)="sortFavorites()">
+      <option value="desc">Stars: High to Low</option>
+      <option value="asc">Stars: Low to High</option>
+    </select>
+  </div>
+
+  <div *ngIf="filteredFavorites.length === 0">
+    <p>No favorite books</p>
+  </div>
+
+  <div *ngIf="filteredFavorites.length > 0" class="book-list">
+    <ul>
+      <li *ngFor="let book of filteredFavorites" (click)="openReviewModal(book)">
         <img [src]="book.thumbnail" alt="Book cover" />
         <h3>{{ book.title }}</h3>
         <p>{{ book.authors.join(', ') }}</p>
-        <p>{{ book.description }}</p>
+        <h4>Stars: {{ book.rating }} </h4>
+        <button (click)="removeFromFavorites(book); $event.stopPropagation()">Remove from Favorites</button>
       </li>
     </ul>
-  
-    <ng-template #noFavorites>
-      <p>You have no favorite books yet.</p>
-    </ng-template>
   </div>
+
+  <div class="modal" *ngIf="selectedBook">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <img [src]="selectedBook.thumbnail" alt="Book cover" class="modal-image"/>
+      <h3>{{ selectedBook.title }}</h3>
+      <p>{{ selectedBook.authors.join(', ') }}</p>
+      <textarea [(ngModel)]="selectedBook.personalNote" placeholder="Write a note (max of 200 words)" maxlength="1200"></textarea>
+      <div class="rating">
+        <label>Rating:</label>
+        <select [(ngModel)]="selectedBook.rating">
+          <option *ngFor="let r of [1, 2, 3, 4, 5]" [value]="r">{{ r }}</option>
+        </select>
+      </div>
+      <button (click)="saveReview()">Save</button>
+    </div>
+  </div>
+</div>
   

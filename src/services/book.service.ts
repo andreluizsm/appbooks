@@ -13,7 +13,8 @@ export class BookService {
 
   searchBooks(query: string): Observable<any[]> {
     return this.http.get<any>(`${this.apiUrl}?q=${query}`).pipe(
-      map(response => response.items.map((item: { volumeInfo: { title: any; authors: any; description: any; imageLinks: { thumbnail: any; }; }; }) => ({
+      map(response => response.items.map((item: { volumeInfo: {id: any; title: any; authors: any; description: any; imageLinks: { thumbnail: any; }; }; }) => ({
+        id: item.volumeInfo.id,
         title: item.volumeInfo.title,
         authors: item.volumeInfo.authors || ['Unknown Author'],
         description: item.volumeInfo.description || 'No description available',
